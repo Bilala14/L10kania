@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 
-class dosenController extends Controller
+class dosen_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,16 +13,17 @@ class dosenController extends Controller
     public function index()
     {
         // menampilkan data dosen
-        return view('Dosen.index');
-
+        $dosens = Dosen::all();
+        return view('dosen.index', compact('dosens'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function tambah()
     {
         // menampilkan form tambah
+        return view('dosen.tambah');
     }
 
     /**
@@ -30,6 +32,23 @@ class dosenController extends Controller
     public function store(Request $request)
     {
         // proses tambah
+        // Validasi data
+        $request->validate([
+            'nidn' => 'required|unique:dosens',
+            'nama' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        // // Simpan data ke database
+        Dosen::create([
+            'nidn' => $request->nidn,
+            'nama' => $request->nama,
+            'email' => $request->email,
+        ]);
+        // Simpan data ke database
+
+        // // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('Dosen.index')->with('success', 'Data dosen berhasil disimpan.');
     }
 
     /**
