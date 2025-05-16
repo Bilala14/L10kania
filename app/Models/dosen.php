@@ -7,6 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
 {
-    protected $table = 'dosens'; // Nama tabel yang benar
-    protected $fillable = ['nidn', 'nama', 'email'];
+    use HasFactory;
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\dosen_Controller;
+use App\Http\Controllers\dosenController;
 
 
 /*
@@ -15,50 +15,50 @@ use App\http\Controllers\dosen_Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/home', function () {
+    return view('home');
 });
 
 // Route::get('/cth', function () {
 //     return view('contoh');
 // });
 
-// Route::fallback (function (){
+// Route::fallback(function () {
 //     return view('notfound');
 // });
 
-// Route :: get('mahasiswa/{nama}', function ($nama){
-//     echo "Ini Halaman Mahasiswa dengan Nama $nama";
-// });
+// // Route::get('mahasiswa/{nama}', function ($nama) {
+// //     echo "Ini Halaman Mahasiswa dengan Nama $nama";
+// // });
 
 // Route::get('/hello/hello2/hellolagi', function () {
-//     echo "Hello Kamu";
+//     echo "Hello World";
 // });
 
-// Route::get('/mahasiswa', function (){
-//     $kelas ="IS62";
-//     $data = ["Putri Chantika","Kania Nabila Muntaz","Sri Maharani","Cut Putri Efrina","Penti Anggraini"];
-//     // return view('mahasiswa.index')->with('mhs','$data')->('kls',$kelas));
+// Route::get('/mahasiswa', function () {
+//     $kelas = "IS63";
+//     $data = ["Khalifah","Herdio","Badri","Raihan","Putri","Hanif"];
+
+//     // return view('mahasiswa.index')->with('mhs',$data)->with('kls',$kelas);
 //     return view('mahasiswa.index',compact('kelas','data'));
 // });
 
-// Route::get('mahasiswa', function () {
-//     $nama ="Penti Anggraini";
-//     $nilai =98;
+// Route::get('/mahasiswa', function () {
+//     $nama = "Herdio Saputra";
+//     $nilai = -40;
 
 //     $nilai2 = [85,70,50,70,35,100];
 
 //     return view('mahasiswa',compact('nama','nilai','nilai2'));
 // });
 
-
-// Route::get('/master', function () {
+// Route::get('/', function () {
 //     $data_mhs = ["Abdul","Adha","Aidil","Alif","Asfal"];
-//     return view('data.master',compact('data_mhs'));
+//     return view('layout.master',compact('data_mhs'));
 // });
 
 // Route::get('/mahasiswa', function () {
-//     $data_mhs = ["Rani","Kania","Putri","Pece","Dini"];
+//     $data_mhs = ["Abdul","Adha","Aidil","Alif","Asfal"];
 //     return view('data.mahasiswa',compact('data_mhs'));
 // });
 
@@ -70,22 +70,12 @@ Route::get('/', function () {
 // Route::get('/galeri', function () {
 //     return view('data.galeri');
 // });
-Auth::routes();
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//Data dosen
-// Route::get('/dosen', [dosen_Controller::class, 'index']);
-// Route::get('/dosen\tambah', [dosen_Controller::class, 'create']);
 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 //Data Dosen
-Route::get('/dosen', [dosen_Controller::class, 'index'])->name('Dosen.index');
-// Form Tambah Data Dosen
-Route::get('/Dosen/tambah', [dosen_Controller::class, 'tambah'])->name('dosens.tambah');
-// Simpan Data Dosen
-Route::post('/dosen', [dosen_Controller::class, 'store'])->name('dosens.store');
+Route::get('/dosen', [dosenController::class, 'index']);
+Route::get('/dosen/form', [dosenController::class, 'create']);
+Route::post('/dosen', [dosenController::class, 'store']);
