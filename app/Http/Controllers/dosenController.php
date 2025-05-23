@@ -5,78 +5,91 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dosen;
 
-class DosenController extends Controller
+class dosenController extends Controller
 {
     /**
-     * Menampilkan daftar semua dosen.
+     * Display a listing of the resource.
      */
     public function index()
     {
-        $dosens = Dosen::all();
-        return view('Dosen.index', compact('dosens'));
+        // menampilkan data dosen
+        $nomor = 1;
+        $dosen = Dosen::all();
+        return view('Dosen.index',compact('dosen','nomor'));
+
     }
 
     /**
-     * Menampilkan form untuk menambahkan dosen baru.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
+        // menampilkan form tambah
         return view('Dosen.form');
     }
 
     /**
-     * Menyimpan dosen baru ke database.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nidn'   => 'required|numeric|unique:dosens,nidn',
-            'nama'   => 'required|string',
-            'email'  => 'required|email|unique:dosens,email',
-            'rumpun' => 'required|string',
-            'nohp'   => 'required|string',
-        ]);
-
-        $dosen = new Dosen();
-        $dosen->nidn   = $request->nidn;
-        $dosen->nama   = $request->nama;
-        $dosen->email  = $request->email;
+        // proses tambah
+        $dosen = new Dosen;
+        $dosen->nidn = $request->nidn;
+        $dosen->nama = $request->nama;
+        $dosen->email = $request->email;
         $dosen->rumpun = $request->rumpun;
-        $dosen->nohp   = $request->nohp;
+        $dosen->nohp = $request->nohp;
         $dosen->save();
 
-        return redirect('/dosen')->with('success', 'Data dosen berhasil ditambahkan!');
+        return redirect('/dosen');
     }
 
     /**
-     * Menampilkan data dosen (detail) — belum diimplementasikan.
+     * Display the specified resource.
      */
     public function show(string $id)
     {
-        // bisa diisi kalau ingin menampilkan detail dosen
+        // menampilkan data detail
     }
 
     /**
-     * Menampilkan form edit dosen — belum diimplementasikan.
+     * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        // tampilkan form edit data dosen
+        // form edit
+        $dosen = Dosen::find($id);
+        return view('Dosen.edit',compact('dosen'));
     }
 
     /**
-     * Memperbarui data dosen — belum diimplementasikan.
+     * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        // proses update data dosen
+        // proses edit
+        $dosen = Dosen::find($id);
+        $dosen->nidn = $request->nidn;
+        $dosen->nama = $request->nama;
+        $dosen->email = $request->email;
+        $dosen->rumpun = $request->rumpun;
+        $dosen->nohp = $request->nohp;
+        $dosen->save();
+
+
+        return redirect('/dosen');
     }
 
     /**
-     * Menghapus data dosen — belum diimplementasikan.
+     * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        // proses hapus data dosen
+        // proses hapus
+        $dosen = Dosen::find($id);
+        $dosen->delete();
+
+        return redirect('/dosen');
     }
 }

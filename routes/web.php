@@ -77,5 +77,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 //Data Dosen
 Route::get('/dosen', [dosenController::class, 'index']);
-Route::get('/dosen/form', [dosenController::class, 'create']);
+Route::get('/dosen/tambah', [dosenController::class, 'create']);
 Route::post('/dosen', [dosenController::class, 'store']);
+Route::get('/dosen/edit/{id}', [dosenController::class, 'edit']);
+Route::put('/dosen/{id}', [dosenController::class, 'update']);
+Route::delete('/dosen/{id}', [dosenController::class, 'destroy']);
